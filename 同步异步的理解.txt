@@ -1,0 +1,20 @@
+// 引入文件和路径模块
+const fs = require('fs')
+const path = require('path')
+// 1.设置一个函数读取文件内容，并返回
+//          参数一：文件路径
+//          参数二：回调函数
+// 这是一个典型的异步
+function get (fpath, callback) {
+  fs.readFile(fpath, 'utf-8', (err, dataStr) => {
+    //  在fpath回来的路上，耗时了，js把他放进了异步队列
+    //                               dataStr是read出的数据
+    err ? console.log(err) : callback(dataStr)
+  })
+}
+//     传过去的参数(文件名)        回调函数传出的数据(自定义的逻辑)
+get(path.join(__dirname, '3.txt'), data => console.log(data))
+
+// 回调的定义:回调是一个函数，它作为参数传递给另一个函数，并在其父函数完成后执行
+// 异步和同步
+// 异步就是耗时任务,等js主线程的代码逻辑执行完,在排队执行异步队列里的任务
